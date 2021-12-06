@@ -2,27 +2,28 @@
 
 <head>
     <style>
-        .slidecontainer {
+        .slidecontainer2 {
             width: 100%;
         }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
+        .slider1 {
+
+            width: 70%;
             height: 25px;
             background: #d3d3d3;
             outline: none;
             opacity: 0.7;
             -webkit-transition: .2s;
             transition: opacity .2s;
+            margin-left: 10%;
         }
 
-        .slider:hover {
+        .slider1:hover {
             opacity: 1;
         }
 
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
+        .slider1::-webkit-slider-thumb {
+
             appearance: none;
             width: 25px;
             height: 25px;
@@ -30,48 +31,129 @@
             cursor: pointer;
         }
 
-        .slider::-moz-range-thumb {
+        .slider1::-moz-range-thumb {
             width: 25px;
             height: 25px;
             background: #04AA6D;
             cursor: pointer;
         }
+
+        .title {
+            float: left;
+            margin-bottom: 0px;
+            margin-top: 5%;
+        }
+
+        .inputfield {
+            float: right;
+            margin-top: 6%;
+            margin-right: 22%;
+            border: 0px;
+        }
+
+        .sub-title {
+            margin-top: 10%;
+        }
+
+        .header {
+            
+        }
+
+        .main-section {
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .header-section {
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .cost-title {
+            
+        }
+
+        .cost-input {
+            display: block;
+            float: right;
+        }
+
+        .currencyinput {
+            float: left;
+            border: 1px;
+        }
+
+        .currencyinput input {
+            border: 0;
+        }
     </style>
+    <script>
+        function calcPayment() {
+            var downPayment = document.getElementById("downPayment").value;
+            console.log(downPayment);
+            var numberOfPayments = document.getElementById("numPayments").value;
+            console.log(numberOfPayments);
+            var treatmentCost = document.getElementById("treatmentCost").value;
+            console.log(treatmentCost);
+            var result = (treatmentCost-downPayment)/numberOfPayments;
+            console.log(result);
+            document.getElementById("calcResult").innerHTML = result.toFixed(2);
+        }
+    </script>
 </head>
 
 <body>
-    <h1>Orthodontic Calculator</h1>
+    <div class="header-section">
+        <h1 class="header">Orthodontic Calculator</h1>
+    </div>
 
-    <h2>Treatment Cost</h2>
-    <input/>
+    <div class="main-section">
+        <h2 class="cost-title">Treatment Cost</h2>
+        <span class="currencyinput">$<input onchange="calcPayment()"; id="treatmentCost" type="text" value="0" default="0"/></span>
+        <br />
 
-    <h2>Down Payment</h2>
-    <p>Adjust the slider to choose initial doesn payment amount.</p>
-    <input id="amount1" type="number" value="100" min="0" max="200" oninput="rangeInput.value=amount1.value" />
+        <h2 class="title">Down Payment</h2>
 
-    <form>
-        <div class="slidecontainer">
-            <input class="slider" id="rangeInput" type="range" min="0" max="200"
-                oninput="amount1.value=rangeInput.value" />
+        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<input id="downPayment" type="number" value="3000"
+            oninput="downPaymentRangeInput=amount1.value" /></span>
+        <br />
+        <p class="sub-title">Adjust the slider to choose initial down payment amount.</p>
 
-        </div>
-    </form>
+        <form>
+            <div class="slidecontainer1">
+                <input onchange="calcPayment()" class="slider1" id="downPaymentRangeInput" type="range" min="0" max="4000"
+                    oninput="downPayment.value=downPaymentRangeInput.value" />
 
-    <h2>Payment Length</h2>
-    <p>Adjust the slider to choose how many months you'd like to spread your payment.</p>
-    <input id="amount2" type="number" value="100" min="0" max="200" oninput="rangeInput.value=amount2.value" />
+            </div>
+        </form>
 
-    <form>
-        <div class="slidecontainer">
-            <input class="slider" id="rangeInput" type="range" min="0" max="200"
-                oninput="amount2.value=rangeInput.value" />
+        <h2 class="title">Payment Length</h2>
 
-        </div>
-    </form>
+        <span style="float: right; margin-top: 6%; margin-right: 22%; "><input style="float:left; border: 0px;" id="numPayments" type="number" value="3" oninput="rangeInput.value=amount2.value"/>/ months</span>
+        <br />
+        <p class="sub-title">Adjust the slider to choose how many months you'd like to spread your payment.</p>
+        <form>
+            <div class="slidecontainer1">
+                <input onchange="calcPayment()" class="slider1" id="rangeInput" type="range" min="0" max="60"
+                    oninput="numPayments.value=rangeInput.value" />
 
-    <h2>Monthly Payment</h2>
-    <p>(0% Interest)</p>
-    <p>$ 82.61</p>
+            </div>
+        </form>
+
+        <h2 style="text-align: center;">Monthly Payment</h2>
+        <p style="text-align: center;">(0% Interest)</p>
+        <span style="margin-left: 48%;" class="currencyinput">$<p class="cost-input" style="text-align: center; margin-top: 0px;
+            margin-left: 0%;
+            margin-bottom: 0%;" id="calcResult">$ 82.61</p></span>
+
+        <script type="text/javascript" language="JavaScript">
+            calcPayment();
+         </script>
+    </div>
+
+
+
+
 
 </body>
 
