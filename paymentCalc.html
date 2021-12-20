@@ -1,6 +1,9 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/2.1.4/jquery-ui.min.js"></script>
     <style>
         .slidecontainer2 {
             width: 100%;
@@ -56,7 +59,7 @@
         }
 
         .header {
-            
+            text-align: center;
         }
 
         .main-section {
@@ -69,9 +72,7 @@
             margin-right: 25%;
         }
 
-        .cost-title {
-            
-        }
+        
 
         .cost-input {
             display: block;
@@ -86,36 +87,112 @@
         .currencyinput input {
             border: 0;
         }
+
+
+
+        
     </style>
+    
     <script>
         function calcPayment() {
-            var downPayment = document.getElementById("downPayment").value;
-            console.log(downPayment);
-            var numberOfPayments = document.getElementById("numPayments").value;
-            console.log(numberOfPayments);
-            var treatmentCost = document.getElementById("treatmentCost").value;
-            console.log(treatmentCost);
-            var result = (treatmentCost-downPayment)/numberOfPayments;
-            console.log(result);
-            document.getElementById("calcResult").innerHTML = result.toFixed(2);
-        }
+            //treatment levels
+            var compExtraMildCost = 3000;
+            var compMildCost = 4000;
+            var compStandardCost = 5000;
+            var compComplexCost = 6000;
+
+            //values from DOM
+            //var downPayment = document.getElementById("downPayment").value;
+            //var numberOfPayments = document.getElementById("numPayments").value;
+            //var treatmentCost = document.getElementById("treatmentCost").value;
+            
+            //payment calculation
+            //var result = (treatmentCost-downPayment)/numberOfPayments;
+            
+            //set result in the DOM
+            //document.getElementById("calcResult").innerHTML = result.toFixed(2);
+        };
+
+        function updateSlider(direction, sliderID, outputID) {
+            var slider = $(sliderID);
+            var step = parseInt(slider.attr('step'), 10);
+            var currentSliderValue = parseInt(slider.val(), 10);
+            var newStepValue = currentSliderValue + step;
+
+            if (direction === "out") {
+                newStepValue = currentSliderValue - step;
+            } else {
+                newStepValue = currentSliderValue + step;
+            }
+
+            slider.val(newStepValue).change();
+            $(outputID).val(newStepValue).change();
+            insuranceRangeInput=newStepValue;
+        };
+
+
     </script>
 </head>
 
 <body>
+
+    <div class="container">
+        <button id="minus" onclick="updateSlider('out', '#range', 'output')">-</button>
+        <input id="range" type="range" step="10" value="50" oninput="updateSlider('out', '#range', 'output')">
+        <button id="plus" onclick="updateSlider('in', '#range', 'output')">+</button>
+        <output for="testOutput" id="output">50</output>
+      </div>
+
+
+
     <div class="header-section">
-        <h1 class="header">Orthodontic Calculator</h1>
+        <h1 class="header">Financial Menu</h1>
     </div>
 
+    <h2>This is a heading</h2>
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<button>Click me</button>
+
     <div class="main-section">
+
+        <h2 style="text-align: center;">Monthly Payment</h2>
+        <span style="margin-left: 48%;" class="currencyinput">$<p class="cost-input" style="text-align: center; margin-top: 0px;
+            margin-left: 0%;
+            margin-bottom: 0%;" id="calcResult"></p></span>
+
+        <br/>
         <h2 class="cost-title">Treatment Cost</h2>
-        <span class="currencyinput">$<input onchange="calcPayment()"; id="treatmentCost" type="text" value="0" default="0"/></span>
+        <select name="treatment-options" id="treatment-options">
+            <option value="comp-extra-mild">COMP EXTRA MILD</option>
+          <option value="comp-mild">COMP MILD</option>
+          <option value="comp-standard">COMP STANDARD</option>
+          <option value="comp-complex">COMP COMPLEX</option>
+        </select>
         <br />
 
-        <h2 class="title">Down Payment</h2>
+        <h2 class="title">Insurance</h2>
+
+        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<input id="insurancePayment" type="number" value="3000"
+            oninput="insuranceRangeInput=amount1.value"/></span>
+        <br />
+        <p class="sub-title">Adjust the slider to choose initial down payment amount.</p>
+
+        <form>
+            <button onclick="updateSlider('out', '#insuranceRangeInput', '#insurancePayment')">+</button>
+            <div class="slidecontainer1">
+                <input onchange="calcPayment()" class="slider1" id="insuranceRangeInput" type="range" min="0" max="4000"
+                    oninput="insurancePayment.value=insuranceRangeInput.value" />
+
+            </div>
+        </form>
+    
+        <h2 class="title">Patient Initial Payment</h2>
 
         <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<input id="downPayment" type="number" value="3000"
-            oninput="downPaymentRangeInput=amount1.value" /></span>
+            oninput="downPaymentRangeInput=amount2.value" /></span>
         <br />
         <p class="sub-title">Adjust the slider to choose initial down payment amount.</p>
 
@@ -129,7 +206,7 @@
 
         <h2 class="title">Payment Length</h2>
 
-        <span style="float: right; margin-top: 6%; margin-right: 22%; "><input style="float:left; border: 0px;" id="numPayments" type="number" value="3" oninput="rangeInput.value=amount2.value"/>/ months</span>
+        <span style="float: right; margin-top: 6%; margin-right: 22%; "><input style="float:left; border: 0px;" id="numPayments" type="number" value="3" oninput="rangeInput.value=amount3.value"/>/ months</span>
         <br />
         <p class="sub-title">Adjust the slider to choose how many months you'd like to spread your payment.</p>
         <form>
@@ -139,12 +216,6 @@
 
             </div>
         </form>
-
-        <h2 style="text-align: center;">Monthly Payment</h2>
-        <p style="text-align: center;">(0% Interest)</p>
-        <span style="margin-left: 48%;" class="currencyinput">$<p class="cost-input" style="text-align: center; margin-top: 0px;
-            margin-left: 0%;
-            margin-bottom: 0%;" id="calcResult">$ 82.61</p></span>
 
         <script type="text/javascript" language="JavaScript">
             calcPayment();
