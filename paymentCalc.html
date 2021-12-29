@@ -118,6 +118,7 @@
             var step = parseInt(slider.attr('step'), 10);
             var currentSliderValue = parseInt(slider.val(), 10);
             var newStepValue = currentSliderValue + step;
+            var output = $(outputID);
 
             if (direction === "out") {
                 newStepValue = currentSliderValue - step;
@@ -126,8 +127,8 @@
             }
 
             slider.val(newStepValue).change();
-            $(outputID).val(newStepValue).change();
-            insuranceRangeInput=newStepValue;
+            output.val(newStepValue).change();
+            //insuranceRangeInput=newStepValue;
         };
 
 
@@ -136,25 +137,10 @@
 
 <body>
 
-    <div class="container">
-        <button id="minus" onclick="updateSlider('out', '#range', 'output')">-</button>
-        <input id="range" type="range" step="10" value="50" oninput="updateSlider('out', '#range', 'output')">
-        <button id="plus" onclick="updateSlider('in', '#range', 'output')">+</button>
-        <output for="testOutput" id="output">50</output>
-      </div>
-
-
 
     <div class="header-section">
         <h1 class="header">Financial Menu</h1>
     </div>
-
-    <h2>This is a heading</h2>
-
-<p>This is a paragraph.</p>
-<p>This is another paragraph.</p>
-
-<button>Click me</button>
 
     <div class="main-section">
 
@@ -175,47 +161,39 @@
 
         <h2 class="title">Insurance</h2>
 
-        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<input id="insurancePayment" type="number" value="3000"
-            oninput="insuranceRangeInput=amount1.value"/></span>
+        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<output id="insurancePayment">2000</output></span>
         <br />
         <p class="sub-title">Adjust the slider to choose initial down payment amount.</p>
 
-        <form>
-            <button onclick="updateSlider('out', '#insuranceRangeInput', '#insurancePayment')">+</button>
-            <div class="slidecontainer1">
-                <input onchange="calcPayment()" class="slider1" id="insuranceRangeInput" type="range" min="0" max="4000"
-                    oninput="insurancePayment.value=insuranceRangeInput.value" />
-
-            </div>
-        </form>
+        <div class="container">
+            <button id="minus" onclick="updateSlider('out', '#insurancePaymentSlider', '#insurancePayment')">-</button>
+            <input id="insurancePaymentSlider" type="range" step="100" value="2000" oninput="updateSlider('out', '#insurancePaymentSlider', '#insurancePayment')" min="0" max="10000">
+            <button id="plus" onclick="updateSlider('in', '#insurancePaymentSlider', '#insurancePayment')">+</button>
+          </div>
     
         <h2 class="title">Patient Initial Payment</h2>
 
-        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<input id="downPayment" type="number" value="3000"
-            oninput="downPaymentRangeInput=amount2.value" /></span>
+        <span style="margin-top: 6%; margin-left: 4%;" class="currencyinput">$<output id="patientInitialPayment">3000</output></span>
         <br />
         <p class="sub-title">Adjust the slider to choose initial down payment amount.</p>
 
-        <form>
-            <div class="slidecontainer1">
-                <input onchange="calcPayment()" class="slider1" id="downPaymentRangeInput" type="range" min="0" max="4000"
-                    oninput="downPayment.value=downPaymentRangeInput.value" />
-
-            </div>
-        </form>
+        <div class="container">
+            <button id="minus" onclick="updateSlider('out', '#patientInitialSlider', '#patientInitialPayment')">-</button>
+            <input id="patientInitialSlider" type="range" step="100" value="3000" oninput="updateSlider('out', '#patientInitialSlider', '#patientInitialPayment')" min="0" max="10000">
+            <button id="plus" onclick="updateSlider('in', '#patientInitialSlider', '#patientInitialPayment')">+</button>
+          </div>
 
         <h2 class="title">Payment Length</h2>
 
-        <span style="float: right; margin-top: 6%; margin-right: 22%; "><input style="float:left; border: 0px;" id="numPayments" type="number" value="3" oninput="rangeInput.value=amount3.value"/>/ months</span>
+        <span style="float: right; margin-top: 6%; margin-right: 22%; "><output style="float:left; border: 0px;" id="numPayments">0</output>/ months</span>
         <br />
         <p class="sub-title">Adjust the slider to choose how many months you'd like to spread your payment.</p>
-        <form>
-            <div class="slidecontainer1">
-                <input onchange="calcPayment()" class="slider1" id="rangeInput" type="range" min="0" max="60"
-                    oninput="numPayments.value=rangeInput.value" />
 
-            </div>
-        </form>
+        <div class="container">
+            <button id="minus" onclick="updateSlider('out', '#numPaymentsSlider', '#numPayments')">-</button>
+            <input id="numPaymentsSlider" type="range" step="1" value="0" oninput="updateSlider('out', '#numPaymentsSlider', '#numPayments')" min="0" max="64">
+            <button id="plus" onclick="updateSlider('in', '#numPaymentsSlider', '#numPayments')">+</button>
+        </div>
 
         <script type="text/javascript" language="JavaScript">
             calcPayment();
